@@ -5,7 +5,8 @@
 | Sr. No. | Topic |
 |:---:|:---:|
 | 1 | [Basic Commands](#1) |
-|  |  |
+| 2 | [Docker Run](#2) |
+| 3 | [Docker Images](#3) |
 |  |  |
 
 
@@ -57,3 +58,42 @@
 - ```docker run -it centos bash```
 - **-it** logs in to the container so we can interact in it.
 ---
+
+
+<a id=2></a>
+
+## Docker Run
+
+---
+- ```docker run image-name:tag```
+- provide a tag i.e. version number of the image to specify a certain version instead of just running the latest.
+- default tag considered by docker is **latest**.
+---
+- ```docker run -it kodekloud/simple-prompt-docker```
+- **-it** means i for interactive and t for terminal.
+- this allows docker to take inputs from Standard input.
+---
+- ```docker run -p 80:5000 kodekloud/webapp```
+- an outside user can only access the docker webserver using the IP address of the docker host machine.
+- inside the docker container, the port used is 5000, but since an outside user won't be able to access the server from inside the container, we have to map the container port to the host port.
+- **-p** helps us map the port 80:5000 means traffic on port 80 of the docker host machine will be routed to port 5000 inside the docker container.
+- So, outside users can access the web server using the IP of host and port such as **http://192.168.1.5:80**
+- In this way, multiple instances of the docker image can be run by mapping it to different ports.
+---
+- ```docker run -v /opt/datadir:/var/lib/mysql mysql```
+- docker containers by default have an isolated file system so any changes to it or addition or deletion will be gone after the container is stopped/deleted.
+- to actually make use of containers and store data, we need to mount a directory outside the docker container to the folder inside the docker container where the data will be stored.
+- in above command, /opt/datadir is the outside location mounted to the /var/lib/mysql location inside the mysql container. 
+- Now, any data stored or deleted will be done directly on the outside folder instead of inside the container so it won't be destroyed along with the container.
+---
+- ```docker inspect container-name```
+- gives additional info about a container in JSON format.
+---
+- ```docker logs container-name```
+- gives the logs i.e. all the details that was printed on the standard output of the container when run on detached mode.
+---
+
+
+<a id=3></a>
+
+## Docker Images
