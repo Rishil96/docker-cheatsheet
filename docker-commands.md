@@ -97,3 +97,45 @@
 <a id=3></a>
 
 ## Docker Images
+
+---
+- ```docker build -f DockerFile -t rishil/my-custom-app```
+- Builds an image with respect to the folder and the DockerFile present in it.
+- **-f** flag is for specifying the docker file.
+- **-t** flag is for giving a tag name for the Image that will be built.
+---
+- ```docker push rishil/my-custom-app```
+- used to push the image to DockerHub. 
+- image name is a combination of the DockerHub account name followed by the image name separated by /.
+---
+- Find a dummy docker file in the flask app demo folder and the basic steps to create an image.
+---
+- Dockerfile is written as an **INSTRUCTION ARGUMENT** format.
+- All docker files must start with a **FROM** command which is a base image of some sort like an OS.
+- Check out e.g. Dockerfile below
+```
+FROM Ubuntu
+
+RUN apt-get update && apt-get -y install python
+
+RUN pip install flask flask-mysql
+
+COPY . /opt/source-code
+
+ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+```
+
+1. Ubuntu will act as a base image for this container.
+2. Updates package index and install Python in Ubuntu base image.
+3. Use pip to install dependencies.
+4. COPY source code files to a separate folder inside the image.
+5. ENTRYPOINT is the command which will be executed when a container is created off of the image.
+---
+- ```docker history image-name```
+- check the details of a specific image.
+- Docker works as a Layered Architecture, so each layer only stores data of the previous layer.
+- Makes it easier to run from a specific layer instead of starting over again.
+- all layers are cached.
+---
+---
+---
