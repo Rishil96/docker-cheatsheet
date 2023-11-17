@@ -7,7 +7,7 @@
 | 1 | [Basic Commands](#1) |
 | 2 | [Docker Run](#2) |
 | 3 | [Docker Images](#3) |
-|  |  |
+| 4 | [Docker Compose](#4) |
 
 
 <a id=1></a>
@@ -136,6 +136,27 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 - Docker works as a Layered Architecture, so each layer only stores data of the previous layer.
 - Makes it easier to run from a specific layer instead of starting over again.
 - all layers are cached.
+---
+- ```docker login```
+- login to your DockerHub account by providing username and password.
+---
+- ```docker run -e APP_COLOR=blue simple-webapp-color```
+- Setting an environment variable for the container.
+- we use docker inspect to get detailed explanation which also includes environment variable.
+---
+- Unlike VMs, containers are not supposed to host operating systems. It is supposed to perform specific tasks, host web servers, etc.
+- A container only lives as long as the process inside it is alive.
+---
+- Difference between **CMD** and **ENTRYPOINT** in Dockerfile.
+- **CMD** is basically the command that runs when we run an image as a container. We cannot append any parameters while running the docker run command.
+- **ENTRYPOINT** is an instruction which is run when we run the docker image as a container. The difference is here we can pass parameters while calling the docker run command and the parameters added will be appended to the entrypoint instruction.
+---
+
+
+<a id=4></a>
+
+## Docker Compose
+
 ---
 ---
 ---
