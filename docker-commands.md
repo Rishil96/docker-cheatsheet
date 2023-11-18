@@ -158,5 +158,54 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 ## Docker Compose
 
 ---
+- It is better to use docker compose when we want to run a complex application containing multiple services.
+- With docker compose, we can create a configuration file in yaml format and put together different services and the options specific to running them.
+- ```docker-compose up```
+- brings up the entire application stack.
 ---
+- ```docker run -d --name=app-name -p 5000:80 --link redis:redis app-container-name```
+- used to link one container to another by providing the container name.
+---
+```
+docker run -d --name=redis redis
+docker run -d --name=db postgres:9.4
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+docker run -d --name=result -p 5001:80 --link db:db result-app
+docker run -d --name=worker --link db:db --link redis:redis worker
+```
+- above is the example to use multiple docker run commands to run a basic voting app.
+- better approach is to create a docker-compose file.
+---
+- In docker-compose.yml file, the name of the containers that we gave in the docker run --name, we use it as items(keys) in the yml file.
+- Under each item, we use a key value pair where key is **image** and value is the name of the image.
+- Also, add additional arguments to the respective containers such as ports and links.
+- Refer below Docker compose e.g. file as per above docker run commands.
+```
+redis:
+    image: redis
+
+db:
+    image: postgres:9.4
+
+vote:
+    image: voting-app
+    ports:
+        - 5000:80
+    links:
+        - redis
+
+result:
+    image: result-app
+    ports:
+        - 5001:80
+    links:
+        - db
+
+worker:
+    image: worker
+    links:
+        - redis
+        - db
+```
+- to run this compose file, use the docker-compose up command.
 ---
